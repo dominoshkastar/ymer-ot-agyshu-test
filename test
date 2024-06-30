@@ -1,0 +1,93 @@
+$ cd ~/zephyrprj/zephyr/
+$ ls
+arch                doc             lib              scripts       version.h.in
+boards              drivers         LICENSE          share         west.yml
+cmake               dts             MAINTAINERS.yml  soc           zephyr-env.cmd
+CMakeLists.txt      include         misc             submanifests  zephyr-env.sh
+CODE_OF_CONDUCT.md  Kconfig         modules          subsys
+CODEOWNERS          Kconfig.zephyr  README.rst       tests
+CONTRIBUTING.rst    kernel          samples          VERSION
+$ west boards
+96b_aerocore2
+96b_argonkey
+96b_avenger96
+96b_carbon
+...
+xiao_ble
+xmc45_relax_kit
+xt-sim
+zybo
+~/zephyrprj/zephyr$ west boards | grep 52840
+adafruit_feather_nrf52840
+nrf21540dk_nrf52840
+nrf52840_blip
+nrf52840_mdk
+nrf52840_mdk_usb_dongle
+nrf52840_papyr
+nrf52840dk_nrf52811
+nrf52840dk_nrf52840
+nrf52840dongle_nrf52840
+nrf9160dk_nrf52840
+rak4631_nrf52840
+rak5010_nrf52840
+ubx_bmd340eval_nrf52840
+ubx_bmd345eval_nrf52840
+ubx_bmd380eval_nrf52840
+ubx_evkninab3_nrf52840
+we_proteus3ev_nrf52840
+$ cd ~/zephyrprj/zephyr/
+$ west build -p always -b nrf52840dk_nrf52840 samples/basic/blinky
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+...
+-- west build: building application
+[1/167] Preparing syscall dependency handling
+[3/167] Generating include/generated/version.h
+-- Zephyr version: 3.2.0-rc2 (~/zephyrprj/zephyr), build: v3.2.0-rc2-183-g5af0fbc2e302
+[157/167] Linking C executable zephyr/zephyr_pre0.elf
+[161/167] Linking C executable zephyr/zephyr_pre1.elf
+[167/167] Linking C executable zephyr/zephyr.elf
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       20428 B       412 KB      4.84%
+            SRAM:        5632 B       256 KB      2.15%
+        IDT_LIST:          0 GB         2 KB      0.00%
+$ west build -p auto samples/basic/blinky
+ninja: no work to do.
+$ west build samples/basic/blinky
+ninja: no work to do.
+$ west flash
+-- west flash: rebuilding
+ninja: no work to do.
+-- west flash: using runner nrfjprog
+Using board 683813629
+-- runners.nrfjprog: Flashing file: ~/zephyrprj/zephyr/build/zephyr/zephyr.hex
+[ ######               ]   0.000s | Erase file - Check image
+[ #####                ]   0.000s | Check image validity - Initialize device info
+[ ##########           ]   0.000s | Check image validity - Check region 0 settings
+[ ###############      ]   0.000s | Check image validity - block 1 of 2
+[ #################### ]   0.026s | Check image validity - Finished
+[ #############        ]   0.000s | Erase file - Erasing
+[ ##########           ]   0.000s | Erasing non-volatile memory - block 1 of 1
+[ #################### ]   0.000s | Erasing non-volatile memory - Erase successful
+[ #################### ]   0.576s | Erase file - Done erasing
+[ ######               ]   0.000s | Program file - Checking image
+[ #####                ]   0.000s | Check image validity - Initialize device info
+[ ##########           ]   0.000s | Check image validity - Check region 0 settings
+[ ###############      ]   0.223s | Check image validity - block 1 of 2
+[ #################### ]   0.020s | Check image validity - Finished
+[ #############        ]   0.000s | Program file - Programming
+[ ##########           ]   0.000s | Programming image - block 1 of 1
+[ #################### ]   0.000s | Programming image - Write successful
+[ #################### ]   0.254s | Program file - Done programming
+[ ######               ]   0.000s | Verify file - Check image
+[ #####                ]   0.000s | Check image validity - Initialize device info
+[ ##########           ]   0.000s | Check image validity - Check region 0 settings
+[ ###############      ]   0.321s | Check image validity - block 1 of 2
+[ #################### ]   0.020s | Check image validity - Finished
+[ #############        ]   0.000s | Verify file - Verifying
+[ ##########           ]   0.000s | Verifying image - block 1 of 1
+[ #################### ]   0.000s | Verifying image - Verify successful
+[ #################### ]   0.246s | Verify file - Done verifying                                                       
+Enabling pin reset.
+Applying pin reset.
+-- runners.nrfjprog: Board with serial number 683813629 flashed successfully.
